@@ -5,15 +5,11 @@
 #include "CarPosition.h"
 
 class AirRaceTrainingPlugin : public BakkesMod::Plugin::BakkesModPlugin {
-public:
-	void onLoad();
-	void onUnload();
-	void loadSpawnToCheckLocations();
-	std::vector<CarPosition> combineLocations(std::vector<CarPosition> firstLocations, std::vector<CarPosition> secondLocations);
-	void setupCarMove(std::vector<CarPosition> positions);
-	void moveCarAlongPositions();
+private:
+	bool isEnabled = false;
 	bool isMoving = false;
 	int counter = 0;
+	std::shared_ptr<int> selectedCheckpoint;
 	std::vector<CarPosition> currentMovingLocations;
 	std::vector<CarPosition> SpawnToFirstCheckLocations;
 	std::vector<CarPosition> SpawnToSecondCheckLocations;
@@ -26,4 +22,22 @@ public:
 	std::vector<CarPosition> SpawnToNinthCheckLocations;
 	std::vector<CarPosition> SpawnToTenthCheckLocations;
 	std::vector<CarPosition> SpawnToLastCheckLocations;
+public:
+	void onLoad();
+	void onUnload();
+	void toggleEnabled(std::string oldValue, CVarWrapper newValue);
+	void showEnabledStatus();
+	bool validPluginState();
+	bool isPanicsAirRace();
+	void loadSpawnToCheckLocations();
+	std::vector<CarPosition> combineLocations(std::vector<CarPosition> firstLocations, std::vector<CarPosition> secondLocations);
+	void setupCarMove(std::vector<CarPosition> positions);
+	void moveCarAlongPositions();
+	void onMapLoad(std::string eventName);
+	void onMapUnload(std::string eventName);
+	void onInitialCarSpawn(std::string eventName);
+	void moveCheckUp();
+	void moveCheckDown();
+	void moveToSelectedCheckpoint(std::string eventName);
+	void log(std::string message, bool sendToChat);
 };
