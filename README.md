@@ -5,28 +5,22 @@ The Air Race Training Plugin is intended to be used with Panic's Air Race map. T
 This plugin works by repeatedly teleporting your car to each trigger on the map until you reach the desired checkpoint. Be warned that this teleporting is very rapid and jarring the first time that you use the plugin.
 
 ## How To Use Plugin
-Make sure that the plugin is enabled. To reach your desired checkpoint, you must call the corresponding command for the checkpoint. For example, to reach the last checkpoint `airracetraining_panicsairrace_lastcheck` must be called.
+Make sure that the plugin is enabled and that you are in an air race map. Select the checkpoint that you want to teleport to either by the plugins tab, or by use of commands. Press your reset button and you will be teleported to your desired checkpoint.
 
 ## How To Enable
 - Click the checkbox on the bakkesmod settings page for the Air Race Training Plugin
 - Run the command `airracetraining_enabled 1`
 
 ## Commands
-Here is a full list of the checkpoint commands
-- `airracetraining_panicsairrace_firstcheck`
-- `airracetraining_panicsairrace_secondcheck`
-- `airracetraining_panicsairrace_thirdcheck`
-- `airracetraining_panicsairrace_fourthcheck`
-- `airracetraining_panicsairrace_fifthcheck`
-- `airracetraining_panicsairrace_sixthcheck`
-- `airracetraining_panicsairrace_seventhcheck`
-- `airracetraining_panicsairrace_eighthcheck`
-- `airracetraining_panicsairrace_ninthcheck`
-- `airracetraining_panicsairrace_tenthcheck`
-- `airracetraining_panicsairrace_lastcheck`
+- `airracetraining_enabled` This is a true/false flag that determines if the plugin should perform teleports.
+- `airracetraining_movecheckup` This will move the selected checkpoint to the previous one.
+- `airracetraining_movecheckdown` This will move the selected checkpoint to the next one.
+- `airracetraining_panicsairrace_selectedcheck` This stores the value of your selected checkpoint.
+- `airracetraining_chatbox_messages` This is a true/false flag that determines if messages should be sent to the chatbox.
 
 ## Recommended Usage
-- Bind the command `toggle airracetraining_enabled 0 1` to a button or key
-- Bind the desired checkpoint to your restart button
+- Bind the command `toggle airracetraining_enabled 0 1` to a button or key. I use the up dpad.
+- Bind the command `airracetraining_movecheckup` to a button or key. I use the left dpad.
+- Bind the command `airracetraining_movecheckdown` to a button or key. I use the right dpad.
 
-This set up makes it very easy to repeatedly train a section over and over again.
+This set up allows you to easily turn the plugin on and off as well as change the checkpoint with the dpad.
