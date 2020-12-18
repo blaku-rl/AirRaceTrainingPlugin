@@ -9,17 +9,19 @@ Make sure that the plugin is enabled and that you are in an air race map. Select
 
 ## How To Enable
 - Click the checkbox on the bakkesmod settings page for the Air Race Training Plugin
-- Run the command `airracetraining_enabled 1`
 
 ## Commands
 - `airracetraining_enabled` This is a true/false flag that determines if the plugin should perform teleports.
+- `airracetraining_toggle_enabled` This will switch the enabled status from true to false and vice versa only if you are in the map.
 - `airracetraining_movecheckup` This will move the selected checkpoint to the previous one.
 - `airracetraining_movecheckdown` This will move the selected checkpoint to the next one.
 - `airracetraining_panicsairrace_selectedcheck` This stores the value of your selected checkpoint.
 - `airracetraining_chatbox_messages` This is a true/false flag that determines if messages should be sent to the chatbox.
 
+An important note is that you can interact with all of the stored values in the settings page.
+
 ## Recommended Usage
-- Bind the command `toggle airracetraining_enabled 0 1` to a button or key. I use the up dpad.
+- Bind the command `airracetraining_toggle_enabled` to a button or key. I use the up dpad.
 - Bind the command `airracetraining_movecheckup` to a button or key. I use the left dpad.
 - Bind the command `airracetraining_movecheckdown` to a button or key. I use the right dpad.
 
