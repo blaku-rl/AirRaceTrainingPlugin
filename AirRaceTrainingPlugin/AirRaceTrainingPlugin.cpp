@@ -1,6 +1,6 @@
 #include "AirRaceTrainingPlugin.h"
 
-BAKKESMOD_PLUGIN(AirRaceTrainingPlugin, "Air Race Training Plugin", "1.1", PLUGINTYPE_FREEPLAY)
+BAKKESMOD_PLUGIN(AirRaceTrainingPlugin, "Air Race Training Plugin", "2.0", PLUGINTYPE_FREEPLAY)
 
 void AirRaceTrainingPlugin::onLoad()
 {
@@ -9,6 +9,9 @@ void AirRaceTrainingPlugin::onLoad()
 	cvarManager->registerCvar("airracetraining_enabled", "0", "Determines if teleporting is desired", true, true, 0, true, 1, true)
 		.addOnValueChanged(bind(&AirRaceTrainingPlugin::toggleEnabled, this, std::placeholders::_1, std::placeholders::_2));
 	cvarManager->registerCvar("airracetraining_chatbox_messages", "1", "Should show messages to the chatbox", true, true, 0, true, 1, true);
+	cvarManager->registerNotifier("airracetraining_toggle_enabled", [this](std::vector<std::string> params) {
+		this->toggleEnabledEasy();
+		}, "Switch the plugin on and off", PERMISSION_FREEPLAY);
 
 	selectedCheckpoint = std::make_shared<int>(0);
 	cvarManager->registerCvar("airracetraining_panicsairrace_selectedcheck", "10", "The checkpoint that will you will be teleported to", true, true, 0, true, 10).bindTo(selectedCheckpoint);
@@ -28,11 +31,24 @@ void AirRaceTrainingPlugin::onUnload()
 	
 }
 
-void AirRaceTrainingPlugin::toggleEnabled(std::string oldValue, CVarWrapper newValue)
+/*
+* This provides a searchable way in the binding tab of bakkesmod to toggle the enabled status
+* This has the added benefit of only running in the map when not paused
+*/
+void AirRaceTrainingPlugin::toggleEnabledEasy()
 {
 	if (isPanicsAirRace() && !gameWrapper->IsPaused())
 	{
-		isEnabled = newValue.getBoolValue();
+		std::string enabled = !cvarManager->getCvar("airracetraining_enabled").getBoolValue() ? "1" : "0";
+		cvarManager->executeCommand("airracetraining_enabled " + enabled);
+	}
+}
+
+void AirRaceTrainingPlugin::toggleEnabled(std::string oldValue, CVarWrapper newValue)
+{
+	isEnabled = newValue.getBoolValue();
+	if (isPanicsAirRace() && !gameWrapper->IsPaused())
+	{
 		showEnabledStatus();
 	}
 }
@@ -56,7 +72,9 @@ bool AirRaceTrainingPlugin::validPluginState()
 
 bool AirRaceTrainingPlugin::isPanicsAirRace()
 {
-	return gameWrapper->GetCurrentMap() == "airracetest" || gameWrapper->GetCurrentMap() == "panicsairrace";
+	std::string mapName = gameWrapper->GetCurrentMap();
+	std::transform(mapName.begin(), mapName.end(), mapName.begin(), std::tolower);
+	return mapName == "airracetest" || mapName == "panicsairrace";
 }
 
 void AirRaceTrainingPlugin::loadSpawnToCheckLocations()
@@ -139,7 +157,6 @@ void AirRaceTrainingPlugin::onInitialCarSpawn(std::string eventName)
 	if (isPanicsAirRace())
 	{
 		gameWrapper->SetTimeout([this](GameWrapper* gw) {
-			this->isEnabled = this->cvarManager->getCvar("airracetraining_enabled").getBoolValue();
 			this->showEnabledStatus();
 			this->gameWrapper->HookEvent("Function GameEvent_Soccar_TA.Active.StartRound", std::bind(&AirRaceTrainingPlugin::moveToSelectedCheckpoint, this, std::placeholders::_1));
 			this->gameWrapper->HookEvent("Function TAGame.GameEvent_Soccar_TA.Destroyed", std::bind(&AirRaceTrainingPlugin::onMapUnload, this, std::placeholders::_1));

@@ -3,6 +3,7 @@
 #include "bakkesmod/plugin/bakkesmodplugin.h"
 #include <vector>
 #include "CarPosition.h"
+#include <algorithm>
 
 class AirRaceTrainingPlugin : public BakkesMod::Plugin::BakkesModPlugin {
 private:
@@ -25,6 +26,7 @@ private:
 public:
 	void onLoad();
 	void onUnload();
+	void toggleEnabledEasy();
 	void toggleEnabled(std::string oldValue, CVarWrapper newValue);
 	void showEnabledStatus();
 	bool validPluginState();
