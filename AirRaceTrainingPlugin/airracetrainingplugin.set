@@ -1,0 +1,8 @@
+Air Race Training Plugin
+9|This plugin is used for teleporting to different checkpoints in Panic's Air Race.
+1|Enable Plugin|airracetraining_enabled
+1|Enable Chatbox Messages|airracetraining_chatbox_messages
+1|Enable Teleporting To Checkpoints|airracetraining_teleportsenabled
+6|Selected Checkpoint|airracetraining_panicsairrace_selectedcheck|1st@0&2nd@1&3rd@2&4th@3&5th@4&6th@5&7th@6&8th@7&9th@8&10th@9&11th@10
+1|Enable Setting Spawn Position|airracetraining_setspawnenabled
+6|Selected Spawn Position|airracetraining_panicsairrace_selectedspawn|1st@0&2nd@1&3rd@2&4th@3&5th@4&6th@5&7th@6&8th@7
